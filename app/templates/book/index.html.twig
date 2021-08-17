@@ -25,6 +25,7 @@
                 <tr>
                     <td>{{ book.id }}</td>
                     <td>{{ book.title }}</td>
+                    <td>{{ book.category.name }}</td>
                     <td>
                         <a href="{{ url('book_show', {id: book.id}) }}" title="{{ 'action_view'|trans }}">
                             {{ 'action_view'|trans }}

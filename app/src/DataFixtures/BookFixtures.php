@@ -1,29 +1,45 @@
 <?php
+/**
+ * Book fixtures.
+ */
 
 namespace App\DataFixtures;
 
 use App\Entity\Book;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
 
-class BookFixtures extends Fixture
+/**
+ * Class BookFixtures.
+ */
+class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
-    protected $faker;
-
-    protected $manager;
-
-    public function load(ObjectManager $manager): void
+    /**
+     * Load data.
+     *
+     * @param ObjectManager $manager Persistence object manager
+     */
+    public function loadData(ObjectManager $manager): void
     {
-        $this->faker = Factory::create();
-        $this->manager = $manager;
-
-        for ($i = 0; $i < 10; ++$i) {
+        $this->createMany(50, 'books', function ($i) {
             $book = new Book();
-            $book->setTitle('book  '.$i);
-            $this->manager->persist($book);
-        }
+            $book->setTitle($this->faker->word);
+            $book->setCategory($this->getRandomReference('categories'));
+
+            return $book;
+        });
 
         $manager->flush();
+    }
+
+    /**
+     * This method must return an array of fixtures classes
+     * on which the implementing class depends on.
+     *
+     * @return array Array of dependencies
+     */
+    public function getDependencies(): array
+    {
+        return [CategoryFixtures::class];
     }
 }
