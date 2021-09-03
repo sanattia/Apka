@@ -25,7 +25,7 @@ class BookRepository extends ServiceEntityRepository
      *
      * @constant int
      */
-    const PAGINATOR_ITEMS_PER_PAGE = 3;
+    const PAGINATOR_ITEMS_PER_PAGE = 10;
 
     /**
      * BookRepository constructor.
@@ -40,13 +40,50 @@ class BookRepository extends ServiceEntityRepository
     /**
      * Query all records.
      *
-     * @return QueryBuilder Query builder
+     * @return \Doctrine\ORM\QueryBuilder Query builder
      */
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
-            ->orderBy('book.id', 'DESC');
+            ->select(
+                'partial book.{id, createdAt, updatedAt, title}',
+                'partial category.{id, name}',
+                'partial tags.{id, title}'
+            )
+            ->join('book.category', 'category')
+            ->leftJoin('book.tags', 'tags')
+            ->orderBy('book.updatedAt', 'DESC');
     }
+
+
+    /**
+     * Save record.
+     *
+     * @param \App\Entity\Book $book Book entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save(Book $book): void
+    {
+        $this->_em->persist($book);
+        $this->_em->flush();
+    }
+
+    /**
+     * Delete record.
+     *
+     * @param \App\Entity\Book $book Book entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function delete(Book $book): void
+    {
+        $this->_em->remove($book);
+        $this->_em->flush();
+    }
+
 
     /**
      * Get or create new query builder.
@@ -59,4 +96,5 @@ class BookRepository extends ServiceEntityRepository
     {
         return $queryBuilder ?? $this->createQueryBuilder('book');
     }
+
 }

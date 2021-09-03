@@ -58,7 +58,7 @@ class RecordController extends AbstractController{
     {
         return $this->render(
             'record/show.html.twig',
-            ['item' => $repository->findById($id)]
+            ['item' => $repository->findOneById($id)]
         );
     }
 }

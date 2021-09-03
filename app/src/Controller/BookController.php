@@ -6,9 +6,10 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Form\BookType;
 use App\Repository\BookRepository;
-use App\Repository\RecordRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,8 +68,8 @@ class BookController extends AbstractController
     /**
      * Show action.
      *
-     * @param RecordRepository $bookRepository Record repository
-     * @param int                              $id         Record id
+     * @param BookRepository $bookRepository Book repository
+     * @param int                              $id         Book id
      *
      * @Route(
      *     "/{id}",
@@ -79,13 +80,133 @@ class BookController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      */
-    public function show(RecordRepository $bookRepository, int $id): Response
+    public function show(BookRepository $bookRepository, int $id): Response
     {
         return $this->render(
             'book/show.html.twig',
-            ['book' => $bookRepository->findById($id)]
+            ['book' => $bookRepository->findOneById($id)]
         );
     }
 
+    /**
+     * Create action.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
+     * @param \App\Repository\BookRepository        $bookRepository Book repository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     *     "/create",
+     *     methods={"GET", "POST"},
+     *     name="book_create",
+     * )
+     */
+    public function create(Request $request, BookRepository $bookRepository): Response
+    {
+        $book = new Book();
+        $form = $this->createForm(BookType::class, $book);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $book->setCreatedAt(new \DateTime());
+            $book->setUpdatedAt(new \DateTime());
+            $bookRepository->save($book);
+            $this->addFlash('success', 'message_added_successfully');
+            return $this->redirectToRoute('book_index');
+        }
+
+        return $this->render(
+            'book/create.html.twig',
+            ['form' => $form->createView()]
+        );
+    }
+
+    /**
+     * Edit action.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
+     * @param \App\Entity\Book                          $book           Book entity
+     * @param \App\Repository\BookRepository            $bookRepository Book repository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     *     "/{id}/edit",
+     *     methods={"GET", "PUT"},
+     *     requirements={"id": "[1-9]\d*"},
+     *     name="book_edit",
+     * )
+     */
+    public function edit(Request $request, Book $book, BookRepository $bookRepository): Response
+    {
+        $form = $this->createForm(BookType::class, $book, ['method' => 'PUT']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $book->setUpdatedAt(new \DateTime());
+            $bookRepository->save($book);
+            $this->addFlash('success', 'message_updated_successfully');
+
+            return $this->redirectToRoute('book_index');
+        }
+
+        return $this->render(
+            'book/edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'book' => $book,
+            ]
+        );
+    }
+    /**
+     * Delete action.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
+     * @param \App\Entity\Book                          $book           Book entity
+     * @param \App\Repository\BookRepository            $bookRepository Book repository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     *     "/{id}/delete",
+     *     methods={"GET", "DELETE"},
+     *     requirements={"id": "[1-9]\d*"},
+     *     name="book_delete",
+     * )
+     */
+    public function delete(Request $request, Book $book, BookRepository $bookRepository): Response
+    {
+        $form = $this->createForm(FormType::class, $book, ['method' => 'DELETE']);
+        $form->handleRequest($request);
+
+        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
+            $form->submit($request->request->get($form->getName()));
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $bookRepository->delete($book);
+            $this->addFlash('success', 'message_deleted_successfully');
+
+            return $this->redirectToRoute('book_index');
+        }
+
+        return $this->render(
+            'book/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'book' => $book,
+            ]
+        );
+    }
 }
 
