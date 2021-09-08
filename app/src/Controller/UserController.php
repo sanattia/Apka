@@ -59,55 +59,43 @@ class UserController extends AbstractController
     /**
      * Edit action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
-     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
+     * @param \App\Repository\UserRepository        $userRepository User repository
+     *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      *
      * @Route(
      *     "/edit",
      *     methods={"GET", "PUT"},
      *     name="user_edit",
-     * )
+     * )            $password = ;
      */
-    public function edit(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function edit(Request $request, UserPasswordEncoderInterface $encoder, UserRepository $userRepository): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(ChangePasswordFormType::class, $user, ['method' => 'PUT']);
         $form->handleRequest($request);
+        if ($request->getMethod() === "POST" && $form->isValid()) {
+                $manager = $this->getDoctrine()->getManager();
+                $plainPassword = $form->get('NewPassword')->getData();
+                $encoded = $encoder->encodePassword($user, $plainPassword);
+                $user->setPassword($encoded);
+                $manager->persist($user);
+                $manager->flush();
+                $this->addFlash('success', 'message_added_successfully');
 
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-
-            $currentPassword = $request->request->get('password');
-            $encoderService = $this->container->get('old_password');
-            $match = $encoderService->isPasswordValid($user, $currentPassword);
-
-            if($match) {
-                // encode the plain password
-                $user->setPassword(
-                    $passwordEncoder->encodePassword(
-                        $user,
-                        $form->get('plainPassword')->getData()
-                    )
-                );
-
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($user);
-                $entityManager->flush();
-
-                $this->addFlash('success', "Password changed successfully");
                 return $this->redirectToRoute('user_index');
             }
-            else{
-                $this->addFlash('success', "Error");
-            }
-        }
 
-        return $this->render('user/edit.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'user/edit.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
     }
 
 
