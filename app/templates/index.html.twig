@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'main_page'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'main_page'|trans }}</h1>
+
+    <div class="form-group row float-sm-right">
+        <a href="{{ url('book_index') }}" class="btn btn-link">
+            {{ 'action_to_books'|trans }}
+        </a>
+    </div>
+    <div class="form-group row float-sm-left">
+        <a href="{{ url('category_index') }}" class="btn btn-link">
+            {{ 'action_to_category'|trans }}
+        </a>
+    </div>
+{% endblock %}

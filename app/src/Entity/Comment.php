@@ -1,21 +1,22 @@
 <?php
 
 namespace App\Entity;
-
+use DateTimeInterface;
 use App\Repository\CommentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=CategoryRepository::class)
+ * @ORM\Entity(repositoryClass=CommentRepository::class)
  * @ORM\Table(name="comments")
  */
+
 class Comment
 {
     /**
-     * Id.
-     *
-     * @var integer
-     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -23,55 +24,116 @@ class Comment
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * Created at.
+     *
+     * @var DateTimeInterface
+     *
+     * @ORM\Column(type="datetime")
+     *
+     * @Assert\Type(type="\DateTimeInterface")
      */
-    private $email;
+
+    private $createdAt;
+
+    /**
+     * Updated at.
+     *
+     * @var DateTimeInterface
+     *
+     * @ORM\Column(type="datetime")
+     *
+     * @Assert\Type(type="\DateTimeInterface")
+     */
+    private $updatedAt;
+
+    /**
+     * @ORM\ManyToOne(
+     *     targetEntity=User::class,
+     *     fetch="EXTRA_LAZY"
+     * )
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+
+    /**
+     * @ORM\ManyToOne(
+     *     targetEntity=Book::class,
+     *     inversedBy="comments",
+     *     fetch="EXTRA_LAZY"
+     * )
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $book;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Type(type="string")
+     * @Assert\Length(
+     *     min="3",
+     *     max="255",
+     * )
      */
-    private $nick;
-
-    /**
-     * @ORM\Column(type="string", length=500)
-     */
-    private $container;
+    private $content;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->email;
+        return $this->createdAt;
     }
 
-    public function setEmail(string $email): void
+    public function setCreatedAt(\DateTimeInterface $createdAt): void
     {
-        $this->email = $email;
-
-    }
-
-    public function getNick(): ?string
-    {
-        return $this->nick;
-    }
-
-    public function setNick(string $nick): void
-    {
-        $this->nick = $nick;
+        $this->createdAt = $createdAt;
 
     }
 
-    public function getContainer(): ?string
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->container;
+        return $this->updatedAt;
     }
 
-    public function setContainer(string $container): void
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): void
     {
-        $this->container = $container;
+        $this->updatedAt = $updatedAt;
 
     }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): void
+    {
+        $this->author = $author;
+
+    }
+
+    public function getBook(): ?Book
+    {
+        return $this->book;
+    }
+
+    public function setBook(?Book $book): void
+    {
+        $this->book = $book;
+
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(string $content): void
+    {
+        $this->content = $content;
+
+    }
+
+
 }

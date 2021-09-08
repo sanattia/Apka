@@ -9,14 +9,18 @@
     {% endblock %}
 </head>
 <body>
-{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-    <div>{{ app.user.firstName }}</div>
-    <div>
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <div class="logged-info">
+    <div class="user-name">{{ app.user.email }}</div>
+    <div class="login-text">
         <a href="{{ url('app_logout') }}">{{ 'action_logout'|trans }}</a>
     </div>
+    </div>
 {% else %}
-    <div>
+    <div class="logged-info">
+    <div class="login-text">
         <a href="{{ url('app_login') }}">{{ 'action_login'|trans }}</a>
+    </div>
     </div>
 {% endif %}
 <div class="container-fluid">

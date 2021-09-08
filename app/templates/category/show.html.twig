@@ -17,14 +17,28 @@
             <dt>{{ 'label_updated_at'|trans }}</dt>
             <dd>{{ category.updatedAt|date('Y/m/d') }}</dd>
         </dl>
-        <p>
-            <a href="{{ url('category_index') }}" title="{{ 'action_back_to_list'|trans }}">
-                {{ 'action_back_to_list'|trans }}
-            </a>
-        </p>
+
+     <h2>{{ 'title_book_list'|trans }}</h2>
+        {% if books|length > 0 %}
+            {% for book in books %}
+                <h4>{{ book.title }}</h4>
+                <small>
+                    {{ book.createdAt|format_datetime('medium', 'short') }}
+                </small>
+            {% endfor %}
+        {% else %}
+            <div>{{ 'message_item_not_found'|trans }}</div>
+        {% endif %}
+
+
     {% else %}
         <p>
             {{ 'message_item_not_found'|trans }}
         </p>
     {% endif %}
+    <p>
+        <a href="{{ url('category_index') }}" title="{{ 'action_back_to_list'|trans }}">
+            {{ 'action_back_to_list'|trans }}
+        </a>
+    </p>
 {% endblock %}

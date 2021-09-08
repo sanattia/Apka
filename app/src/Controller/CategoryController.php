@@ -8,7 +8,9 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
+use App\Repository\BookRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class CategoryController.
  *
  * @Route("/category")
+ * @IsGranted("ROLE_ADMIN")
  */
 class CategoryController extends AbstractController
 {
@@ -54,7 +57,7 @@ class CategoryController extends AbstractController
      * Show action.
      *
      * @param \App\Entity\Category $category Category entity
-     *
+     * @param BookRepository $bookRepository Book repository
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @Route(
@@ -64,11 +67,13 @@ class CategoryController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      * )
      */
-    public function show(Category $category): Response
+    public function show(Category $category, BookRepository $bookRepository): Response
     {
         return $this->render(
             'category/show.html.twig',
-            ['category' => $category]
+            ['category' => $category,
+            'books' => $bookRepository->findBy(['category' => $category])
+            ]
         );
     }
 

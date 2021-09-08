@@ -1,0 +1,28 @@
+.user-name{
+    color:#b3d4fc;
+    font-size: medium;
+    font-weight: 700;
+}
+
+.logged-info{
+    position: relative;
+    right: 0;
+    top: 0;
+    padding: 0.8%;
+    text-align: right;
+}
+
+.login-text{
+    text-align: right;
+}
+
+.button {
+    background-color: #59b7b7;
+    border: none;
+    color: white;
+    padding: 0.8% 1%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 0.8%;
+}

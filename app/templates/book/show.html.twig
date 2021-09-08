@@ -18,10 +18,41 @@
             <dd>{{ book.createdAt|date('Y/m/d') }}</dd>
             <dt>{{ 'label_updated_at'|trans }}</dt>
             <dd>{{ book.updatedAt|date('Y/m/d') }}</dd>
+            <dt>{{ 'label_tags'|trans }}</dt>
+            <dd>
+
+                {% if book.tags is defined and book.tags|length %}
+                    {% for tag in book.tags %}
+                        {{ tag.title }}
+                    {% endfor %}
+                {% else %}
+                    &nbsp;
+                {% endif %}
+            </dd>
         </dl>
-        <p>
-            <a href="{{ url('book_index') }}" title="{{ 'action_back_to_list'|trans }}">
-                {{ 'action_back_to_list'|trans }}
+        <h2>{{ 'comment_list'|trans }}</h2>
+        {% if comments|length > 0 %}
+            {% for comment in comments %}
+                <h4>{{ comment.author }}</h4>
+                <small>
+                    {{ comment.createdAt|format_datetime('medium', 'short') }}
+                </small>
+                <p>{{ comment.content }}</p>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <hr>
+                    <a href="{{ url('comment_delete', {id: comment.id}) }}" title="{{ 'action_delete'|trans }}">
+                        {{ 'action_delete'|trans }}
+                    </a>
+                    <hr>
+                    </td>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <div>{{ 'no_comments'|trans }}</div>
+        {% endif %}
+        <p class="button">
+            <a href="{{ url('book_comment', {id: book.id}) }}" title="{{ 'action_add_comment'|trans }}">
+                {{ 'action_add_comment'|trans }}
             </a>
         </p>
     {% else %}
@@ -29,4 +60,9 @@
             {{ 'message_item_not_found'|trans }}
         </p>
     {% endif %}
+    <p class="button">
+        <a href="{{ url('book_index') }}" title="{{ 'action_back_to_list'|trans }}">
+            {{ 'action_back_to_list'|trans }}
+        </a>
+    </p>
 {% endblock %}

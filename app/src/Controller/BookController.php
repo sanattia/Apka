@@ -6,8 +6,12 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Entity\Comment;
 use App\Form\BookType;
+use App\Form\CommentType;
 use App\Repository\BookRepository;
+use App\Repository\CommentRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +23,7 @@ use Knp\Component\Pager\PaginatorInterface;
  * Class BookController.
  *
  * @Route("/book")
+ * @IsGranted("IS_AUTHENTICATED_ANONYMOUSLY")
  */
 
 class BookController extends AbstractController
@@ -69,6 +74,7 @@ class BookController extends AbstractController
      * Show action.
      *
      * @param BookRepository $bookRepository Book repository
+     * @param BookRepository $commentRepository Comment repository
      * @param int                              $id         Book id
      *
      * @Route(
@@ -80,11 +86,15 @@ class BookController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      */
-    public function show(BookRepository $bookRepository, int $id): Response
+    public function show(BookRepository $bookRepository, CommentRepository $commentRepository, Book $book,  int $id): Response
     {
         return $this->render(
             'book/show.html.twig',
-            ['book' => $bookRepository->findOneById($id)]
+            [
+                'book' => $bookRepository->findOneById($id),
+                'comments' => $commentRepository->findBy(['book' => $book])
+
+            ]
         );
     }
 
@@ -104,6 +114,9 @@ class BookController extends AbstractController
      *     methods={"GET", "POST"},
      *     name="book_create",
      * )
+     *
+     * @IsGranted("ROLE_ADMIN")
+     * )
      */
     public function create(Request $request, BookRepository $bookRepository): Response
     {
@@ -121,7 +134,8 @@ class BookController extends AbstractController
 
         return $this->render(
             'book/create.html.twig',
-            ['form' => $form->createView()]
+            ['form' => $form->createView(), 'book' => $book,
+            ]
         );
     }
 
@@ -142,6 +156,11 @@ class BookController extends AbstractController
      *     methods={"GET", "PUT"},
      *     requirements={"id": "[1-9]\d*"},
      *     name="book_edit",
+     * )
+     *
+     * @IsGranted(
+     *     "EDIT",
+     *     subject="book",
      * )
      */
     public function edit(Request $request, Book $book, BookRepository $bookRepository): Response
@@ -183,6 +202,11 @@ class BookController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     name="book_delete",
      * )
+     *
+     * @IsGranted(
+     *     "DELETE",
+     *     subject="book",
+     * )
      */
     public function delete(Request $request, Book $book, BookRepository $bookRepository): Response
     {
@@ -208,5 +232,55 @@ class BookController extends AbstractController
             ]
         );
     }
+
+    /**
+     * Comment action.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request     $request            HTTP request
+     * @param \App\Entity\Book                              $book               Book entity
+     * @param \App\Entity\Comment                           $comment            Comment entity
+     * @param CommentRepository                             $commentRepository  Comment Repository
+     * @return \Symfony\Component\HttpFoundation\Response   HTTP response
+     *
+     * @Route(
+     *     "/{id}/comment",
+     *     methods={"GET", "POST"},
+     *     name="book_comment",
+     *     requirements={"id": "[1-9]\d*"},
+     * )
+     * @IsGranted("ROLE_USER")
+     *
+     */
+    public function comment(Request $request, Book $book, CommentRepository $commentRepository): Response
+    {
+
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setBook($book);
+            $comment->setAuthor($this->getUser());
+            $comment->setCreatedAt(new \DateTime());
+            $comment->setUpdatedAt(new \DateTime());
+            $commentRepository->save($comment);
+
+            $this->addFlash('success', 'message_added_successfully');
+
+            return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
+        }
+
+        return $this->render(
+            'book/comment.html.twig',
+            [
+                'form' => $form->createView(),
+                'book' => $book,
+                'comment' => $comment,
+            ]
+        );
+    }
+
+
+
 }
 

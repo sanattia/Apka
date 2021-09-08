@@ -205,4 +205,10 @@ class User implements UserInterface
     {
         // TODO: Implement @method string getUserIdentifier()
     }
+
+
+    public function __toString(): string
+    {
+        return $this->email;
+    }
 }

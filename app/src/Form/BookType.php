@@ -5,12 +5,11 @@
 
 namespace App\Form;
 
-use App\Entity\Book;
 use App\Entity\Category;
-use App\Entity\Tag;
+use App\Entity\Book;
+use App\Form\DataTransformer\TagsDataTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,6 +19,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class BookType extends AbstractType
 {
+    /**
+     * Tags data transformer.
+     *
+     * @var \App\Form\DataTransformer\TagsDataTransformer
+     */
+    private $tagsDataTransformer;
+
+    /**
+     * BookType constructor.
+     *
+     * @param \App\Form\DataTransformer\TagsDataTransformer $tagsDataTransformer Tags data transformer
+     */
+    public function __construct(TagsDataTransformer $tagsDataTransformer)
+    {
+        $this->tagsDataTransformer = $tagsDataTransformer;
+    }
+
     /**
      * Builds the form.
      *
@@ -55,21 +71,18 @@ class BookType extends AbstractType
                 'required' => true,
             ]
         );
-
         $builder->add(
             'tags',
-            EntityType::class,
+            TextType::class,
             [
-                'class' => Tag::class,
-                'choice_label' => function ($tag) {
-                    return $tag->getTitle();
-                },
-
                 'label' => 'label_tags',
                 'required' => false,
-                'expanded' => true,
-                'multiple' => true,
+                'attr' => ['max_length' => 128],
             ]
+        );
+
+        $builder->get('tags')->addModelTransformer(
+            $this->tagsDataTransformer
         );
     }
 

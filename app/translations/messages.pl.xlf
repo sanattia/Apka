@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" datatype="plaintext" original="file.ext">
+    <file source-language="pl" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="label_actions">
                 <source>label_actions</source>
-                <target>Actions</target>
+                <target>Akcje</target>
             </trans-unit>
             <trans-unit id="label_id">
                 <source>label_id</source>
@@ -12,167 +12,167 @@
             </trans-unit>
             <trans-unit id="label_title">
                 <source>label_title</source>
-                <target>Title</target>
+                <target>Tytuł</target>
             </trans-unit>
             <trans-unit id="label_show">
                 <source>label_show</source>
-                <target>Show</target>
+                <target>Pokaż</target>
             </trans-unit>
             <trans-unit id="label_edit">
                 <source>label_edit</source>
-                <target>Edit</target>
+                <target>Edytuj</target>
             </trans-unit>
             <trans-unit id="label_delete">
                 <source>label_delete</source>
-                <target>Delete</target>
+                <target>Usuń</target>
             </trans-unit>
             <trans-unit id="label_category">
                 <source>label_category</source>
-                <target>Category</target>
+                <target>Kategorie</target>
             </trans-unit>
             <trans-unit id="label_name">
                 <source>label_name</source>
-                <target>Name</target>
+                <target>Nazwa</target>
             </trans-unit>
             <trans-unit id="label_content">
                 <source>label_content</source>
-                <target>Content</target>
+                <target>Kontent</target>
             </trans-unit>
             <trans-unit id="label_tags">
                 <source>label_tags</source>
-                <target>Tags</target>
+                <target>Tagi</target>
             </trans-unit>
             <trans-unit id="message_empty_list">
                 <source>message_empty_list</source>
-                <target>Empty list.</target>
+                <target>Pusta lista.</target>
             </trans-unit>
             <trans-unit id="title_record_list">
                 <source>title_record_list</source>
-                <target>Records list</target>
+                <target>Lista Rekordów</target>
             </trans-unit>
             <trans-unit id="action_back_to_list">
                 <source>action_back_to_list</source>
-                <target>Back to list</target>
+                <target>Powrót</target>
             </trans-unit>
             <trans-unit id="title_book_details">
                 <source>title_book_details</source>
-                <target>Book Details</target>
+                <target>Szczegóły Książki</target>
             </trans-unit>
             <trans-unit id="title_book_list">
                 <source>title_book_list</source>
-                <target>Book List</target>
+                <target>Lista Książek</target>
             </trans-unit>
             <trans-unit id="message_item_not_found">
                 <source>message_item_not_found</source>
-                <target>Item not found</target>
+                <target>Nie znaleziono</target>
             </trans-unit>
             <trans-unit id="title_category_create">
                 <source>title_category_create</source>
-                <target>Create category</target>
+                <target>Stwórz kategorie</target>
             </trans-unit>
             <trans-unit id="action_save">
                 <source>action_save</source>
-                <target>Save</target>
+                <target>Zapisz</target>
             </trans-unit>
             <trans-unit id="title_category_delete">
                 <source>title_category_delete</source>
-                <target>Delete Category</target>
+                <target>Usuń Kategorie</target>
             </trans-unit>
             <trans-unit id="title_category_edit">
                 <source>title_category_edit</source>
-                <target>Edit Category</target>
+                <target>Edytuj Kategorie</target>
             </trans-unit>
             <trans-unit id="title_category_list">
                 <source>title_category_list</source>
-                <target>List Categories</target>
+                <target>Pokaż Kategorie</target>
             </trans-unit>
             <trans-unit id="title_book_delete">
                 <source>title_book_delete</source>
-                <target>Delete Book</target>
+                <target>Usuń Książkę</target>
             </trans-unit>
             <trans-unit id="title_book_edit">
                 <source>title_book_edit</source>
-                <target>Edit Book</target>
+                <target>Edytuj Książkę</target>
             </trans-unit>
             <trans-unit id="action_view">
                 <source>action_view</source>
-                <target>View</target>
+                <target>Pokaż</target>
             </trans-unit>
             <trans-unit id="action_edit">
                 <source>action_edit</source>
-                <target>Edit</target>
+                <target>Edytuj</target>
             </trans-unit>
             <trans-unit id="action_delete">
                 <source>action_delete</source>
-                <target>Delete</target>
+                <target>Usuń</target>
             </trans-unit>
             <trans-unit id="label_created_at">
                 <source>label_created_at</source>
-                <target>Created At</target>
+                <target>Stworzono</target>
             </trans-unit>
             <trans-unit id="label_updated_at">
                 <source>label_updated_at</source>
-                <target>Updated At</target>
+                <target>Edytowano</target>
             </trans-unit>
             <trans-unit id="action_logout">
                 <source>action_logout</source>
-                <target>Log Out</target>
+                <target>Wyloguj</target>
             </trans-unit>
             <trans-unit id="action_login">
                 <source>action_login</source>
-                <target>Log In</target>
+                <target>Zaloguj</target>
             </trans-unit>
             <trans-unit id="action_add_comment">
                 <source>action_add_comment</source>
-                <target>Add Comment</target>
+                <target>Dodaj Komentarz</target>
             </trans-unit>
             <trans-unit id="title_book_comment_create">
                 <source>title_book_comment_create</source>
-                <target>Add Book Comment</target>
+                <target>Dodaj komentarz do książki</target>
             </trans-unit>
             <trans-unit id="action_back_to_book">
                 <source>action_back_to_book</source>
-                <target>Back To Book Details</target>
+                <target>Powrót do książek</target>
             </trans-unit>
             <trans-unit id="label_action">
                 <source>label_action</source>
-                <target>Action</target>
+                <target>Akcja</target>
             </trans-unit>
             <trans-unit id="no_comments">
                 <source>no_comments</source>
-                <target>No Comments Found</target>
+                <target>Brak komentarzy</target>
             </trans-unit>
             <trans-unit id="title_category_details">
                 <source>title_category_details</source>
-                <target>Category Details</target>
+                <target>Detale kategori</target>
             </trans-unit>
             <trans-unit id="comment_list">
                 <source>comment_list</source>
-                <target>Comments</target>
+                <target>Komentarze</target>
             </trans-unit>
             <trans-unit id="title_book_create">
                 <source>title_book_create</source>
-                <target>Create Book</target>
+                <target>Stwórz ksiązkę</target>
             </trans-unit>
             <trans-unit id="message_added_successfully">
                 <source>message_added_successfully</source>
-                <target>Added Successfully</target>
+                <target>Dodano z powodzeniem</target>
             </trans-unit>
             <trans-unit id="delete_confirm">
                 <source>delete_confirm</source>
-                <target>Do you really want to delete?</target>
+                <target>Czy na pewno usunąć?</target>
             </trans-unit>
             <trans-unit id="action_create">
                 <source>action_create</source>
-                <target>Create New</target>
+                <target>Swtórz nową</target>
             </trans-unit>
             <trans-unit id="label_none">
                 <source>label_none</source>
-                <target>None</target>
+                <target>Brak</target>
             </trans-unit>
             <trans-unit id="title_comment_delete">
                 <source>title_comment_delete</source>
-                <target>Delete Comment</target>
+                <target>Usuń Komentarz</target>
             </trans-unit>
         </body>
     </file>
