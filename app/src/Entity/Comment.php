@@ -1,19 +1,16 @@
 <?php
 
 namespace App\Entity;
-use DateTimeInterface;
+
 use App\Repository\CommentRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
  * @ORM\Table(name="comments")
  */
-
 class Comment
 {
     /**
@@ -32,7 +29,6 @@ class Comment
      *
      * @Assert\Type(type="\DateTimeInterface")
      */
-
     private $createdAt;
 
     /**
@@ -80,26 +76,24 @@ class Comment
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): void
+    public function setCreatedAt(DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
-
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): void
+    public function setUpdatedAt(DateTimeInterface $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
-
     }
 
     public function getAuthor(): ?User
@@ -110,7 +104,6 @@ class Comment
     public function setAuthor(?User $author): void
     {
         $this->author = $author;
-
     }
 
     public function getBook(): ?Book
@@ -121,7 +114,6 @@ class Comment
     public function setBook(?Book $book): void
     {
         $this->book = $book;
-
     }
 
     public function getContent(): ?string
@@ -132,8 +124,5 @@ class Comment
     public function setContent(string $content): void
     {
         $this->content = $content;
-
     }
-
-
 }

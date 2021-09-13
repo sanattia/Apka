@@ -68,4 +68,9 @@
             {{ 'message_empty_list'|trans }}
         </p>
     {% endif %}
+    <p class="button">
+        <a href="{{ url('home') }}" title="{{ 'action_back_to_list'|trans }}">
+            {{ 'action_back_to_list'|trans }}
+        </a>
+    </p>
 {% endblock %}

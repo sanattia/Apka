@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
  * @ORM\Table(name="categories")
@@ -21,7 +20,7 @@ class Category
     /**
      * Id.
      *
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -45,12 +44,10 @@ class Category
      *     max="64",
      * )
      */
-
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Book::class, mappedBy="category", fetch="EXTRA_LAZY",)
-     *
      */
     private $books;
 

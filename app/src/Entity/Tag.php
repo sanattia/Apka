@@ -5,12 +5,9 @@
 
 namespace App\Entity;
 
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation;
-use Gedmo\Mapping\Annotation\Slug;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -27,14 +24,13 @@ class Tag
     /**
      * Id.
      *
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
-
 
     /**
      * Title.
@@ -56,11 +52,9 @@ class Tag
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity=Book::class, mappedBy="tags",)
-     *
+     * @ORM\ManyToMany(targetEntity=Book::class, mappedBy="tags",)
      */
     private $books;
-
 
     /**
      * Tag constructor.
@@ -79,7 +73,6 @@ class Tag
     {
         return $this->id;
     }
-
 
     /**
      * Getter for Title.

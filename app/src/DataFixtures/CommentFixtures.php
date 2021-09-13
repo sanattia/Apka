@@ -28,6 +28,7 @@ class CommentFixtures extends AbstractBaseFixtures implements DependentFixtureIn
             $comment->setContent($this->faker->sentence);
             $comment->setBook($this->getRandomReference('books'));
             $comment->setAuthor($this->getRandomReference('users'));
+
             return $comment;
         });
 

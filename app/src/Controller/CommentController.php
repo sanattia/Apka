@@ -6,15 +6,13 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
-use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * Class CommentController.
@@ -22,30 +20,26 @@ use Knp\Component\Pager\PaginatorInterface;
  * @Route("/comment")
  * @IsGranted("ROLE_USER")
  */
-
 class CommentController extends AbstractController
 {
-
     private CommentRepository $commentRepository;
 
     /**
      * CommentController constructor.
+     *
      * @param CommentRepository $commentRepository Comment Repository
      */
-
-
     public function __construct(CommentRepository $commentRepository)
     {
         $this->commentRepository = $commentRepository;
     }
 
-
     /**
      * Delete action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
-     * @param \App\Entity\Comment                          $comment           Comment entity
-     * @param \App\Repository\CommentRepository            $commentRepository Comment repository
+     * @param \Symfony\Component\HttpFoundation\Request $request           HTTP request
+     * @param \App\Entity\Comment                       $comment           Comment entity
+     * @param \App\Repository\CommentRepository         $commentRepository Comment repository
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -58,7 +52,6 @@ class CommentController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     name="comment_delete",
      * )
-     *
      */
     public function deleteComment(Request $request, Comment $comment, CommentRepository $commentRepository): Response
     {
@@ -84,6 +77,4 @@ class CommentController extends AbstractController
             ]
         );
     }
-
 }
-

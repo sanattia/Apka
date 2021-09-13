@@ -11,13 +11,13 @@ use App\Form\BookType;
 use App\Form\CommentType;
 use App\Repository\BookRepository;
 use App\Repository\CommentRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * Class BookController.
@@ -25,18 +25,15 @@ use Knp\Component\Pager\PaginatorInterface;
  * @Route("/book")
  * @IsGranted("IS_AUTHENTICATED_ANONYMOUSLY")
  */
-
 class BookController extends AbstractController
 {
-
     private BookRepository $bookRepository;
 
     /**
      * BookController constructor.
+     *
      * @param BookRepository $bookRepository Book Repository
      */
-
-
     public function __construct(BookRepository $bookRepository)
     {
         $this->bookRepository = $bookRepository;
@@ -73,9 +70,9 @@ class BookController extends AbstractController
     /**
      * Show action.
      *
-     * @param BookRepository $bookRepository Book repository
+     * @param BookRepository $bookRepository    Book repository
      * @param BookRepository $commentRepository Comment repository
-     * @param int                              $id         Book id
+     * @param int            $id                Book id
      *
      * @Route(
      *     "/{id}",
@@ -86,14 +83,13 @@ class BookController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      */
-    public function show(BookRepository $bookRepository, CommentRepository $commentRepository, Book $book,  int $id): Response
+    public function show(BookRepository $bookRepository, CommentRepository $commentRepository, Book $book, int $id): Response
     {
         return $this->render(
             'book/show.html.twig',
             [
                 'book' => $bookRepository->findOneById($id),
-                'comments' => $commentRepository->findBy(['book' => $book])
-
+                'comments' => $commentRepository->findBy(['book' => $book]),
             ]
         );
     }
@@ -101,8 +97,8 @@ class BookController extends AbstractController
     /**
      * Create action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
-     * @param \App\Repository\BookRepository        $bookRepository Book repository
+     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
+     * @param \App\Repository\BookRepository            $bookRepository Book repository
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -129,6 +125,7 @@ class BookController extends AbstractController
             $book->setUpdatedAt(new \DateTime());
             $bookRepository->save($book);
             $this->addFlash('success', 'message_added_successfully');
+
             return $this->redirectToRoute('book_index');
         }
 
@@ -184,6 +181,7 @@ class BookController extends AbstractController
             ]
         );
     }
+
     /**
      * Delete action.
      *
@@ -236,11 +234,12 @@ class BookController extends AbstractController
     /**
      * Comment action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request     $request            HTTP request
-     * @param \App\Entity\Book                              $book               Book entity
-     * @param \App\Entity\Comment                           $comment            Comment entity
-     * @param CommentRepository                             $commentRepository  Comment Repository
-     * @return \Symfony\Component\HttpFoundation\Response   HTTP response
+     * @param \Symfony\Component\HttpFoundation\Request $request           HTTP request
+     * @param \App\Entity\Book                          $book              Book entity
+     * @param \App\Entity\Comment                       $comment           Comment entity
+     * @param CommentRepository                         $commentRepository Comment Repository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @Route(
      *     "/{id}/comment",
@@ -249,11 +248,9 @@ class BookController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      * )
      * @IsGranted("ROLE_USER")
-     *
      */
     public function comment(Request $request, Book $book, CommentRepository $commentRepository): Response
     {
-
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -279,8 +276,4 @@ class BookController extends AbstractController
             ]
         );
     }
-
-
-
 }
-

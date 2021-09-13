@@ -7,8 +7,8 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
-use App\Repository\CategoryRepository;
 use App\Repository\BookRepository;
+use App\Repository\CategoryRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -56,8 +56,9 @@ class CategoryController extends AbstractController
     /**
      * Show action.
      *
-     * @param \App\Entity\Category $category Category entity
-     * @param BookRepository $bookRepository Book repository
+     * @param \App\Entity\Category $category       Category entity
+     * @param BookRepository       $bookRepository Book repository
+     *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @Route(
@@ -72,7 +73,7 @@ class CategoryController extends AbstractController
         return $this->render(
             'category/show.html.twig',
             ['category' => $category,
-            'books' => $bookRepository->findBy(['category' => $category])
+            'books' => $bookRepository->findBy(['category' => $category]),
             ]
         );
     }
@@ -179,8 +180,9 @@ class CategoryController extends AbstractController
      */
     public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
-        if($category->getBooks()->count()){
+        if ($category->getBooks()->count()) {
             $this->addFlash('warning', 'message_category_contain_books');
+
             return $this->redirectToRoute('category_index');
         }
         $form = $this->createForm(CategoryType::class, $category, ['method' => 'DELETE']);
@@ -205,5 +207,4 @@ class CategoryController extends AbstractController
             ]
         );
     }
-
 }

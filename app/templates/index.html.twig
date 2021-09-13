@@ -7,14 +7,23 @@
 {% block body %}
     <h1>{{ 'main_page'|trans }}</h1>
 
-    <div class="form-group row float-sm-right">
+    <div class="button">
         <a href="{{ url('book_index') }}" class="btn btn-link">
             {{ 'action_to_books'|trans }}
         </a>
     </div>
-    <div class="form-group row float-sm-left">
+    {% if is_granted('ROLE_ADMIN') %}
+    <div class="button">
         <a href="{{ url('category_index') }}" class="btn btn-link">
             {{ 'action_to_category'|trans }}
         </a>
     </div>
+    {% endif %}
+    {% if is_granted('ROLE_USER') %}
+    <div class="button">
+        <a href="{{ url('user_index') }}" class="btn btn-link">
+            {{ 'action_to_user'|trans }}
+        </a>
+    </div>
+    {% endif %}
 {% endblock %}

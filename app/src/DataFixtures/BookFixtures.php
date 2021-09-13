@@ -36,7 +36,6 @@ class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInter
                 $book->addTag($tag);
             }
 
-
             return $book;
         });
 

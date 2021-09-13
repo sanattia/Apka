@@ -174,6 +174,107 @@
                 <source>title_comment_delete</source>
                 <target>Usuń Komentarz</target>
             </trans-unit>
+            <trans-unit id="main_page">
+                <source>main_page</source>
+                <target>Strona Główna</target>
+            </trans-unit>
+            <trans-unit id="action_to_books">
+                <source>action_to_books</source>
+                <target>Do listy książek</target>
+            </trans-unit>
+            <trans-unit id="action_to_category">
+                <source>action_to_category</source>
+                <target>Do listy kategorii</target>
+            </trans-unit>
+            <trans-unit id="action_to_user">
+                <source>action_to_user</source>
+                <target>Do profilu</target>
+            </trans-unit>
+            <trans-unit id="title_user_index">
+                <source>title_user_index</source>
+                <target>Twój profil</target>
+            </trans-unit>
+            <trans-unit id="book_create">
+                <source>book_create</source>
+                <target>Stwórz książkę</target>
+            </trans-unit>
+            <trans-unit id="action_forgot_password">
+                <source>action_forgot_password</source>
+                <target>Przypomnij hasło</target>
+            </trans-unit>
+            <trans-unit id="title_user_login">
+                <source>title_user_login</source>
+                <target>Zaloguj!</target>
+            </trans-unit>
+            <trans-unit id="logged_as">
+                <source>logged_as</source>
+                <target>Jesteś zalogowany jako: </target>
+            </trans-unit>
+            <trans-unit id="title_reset_email">
+                <source>title_reset_email</source>
+                <target>Wysłano mail do zresetowania hasła</target>
+            </trans-unit>
+            <trans-unit id="reset_mail_content">
+                <source>reset_mail_content</source>
+                <target>Jeśli konto istnieje, został wysłany email z linkiem do zresetowania hasła.
+Ten link wygaśnie w: </target>
+            </trans-unit>
+            <trans-unit id="try_again">
+                <source>try_again</source>
+                <target>spróbować znów</target>
+            </trans-unit>
+            <trans-unit id="reset_pass_if">
+                <source>reset_pass_if</source>
+                <target>Jeśli nie otrzymasz maila, sprawdź folder spamu lub możesz </target>
+            </trans-unit>
+            <trans-unit id="to_reset_pass">
+                <source>to_reset_pass</source>
+                <target>Aby zresetować hasło, kliknij w ten link: </target>
+            </trans-unit>
+            <trans-unit id="expire_link">
+                <source>expire_link</source>
+                <target>Link wygaśnie w: </target>
+            </trans-unit>
+            <trans-unit id="title_reset_pass">
+                <source>title_reset_pass</source>
+                <target>Zresetuj hasło </target>
+            </trans-unit>
+            <trans-unit id="enter_email_reset">
+                <source>enter_email_reset</source>
+                <target>Wpisz mail do zresetowania hasła </target>
+            </trans-unit>
+            <trans-unit id="send_email_reset">
+                <source>send_email_reset</source>
+                <target>Wyślij mail </target>
+            </trans-unit>
+            <trans-unit id="title_user_edit">
+                <source>title_user_edit</source>
+                <target>Edytuj użytkownika </target>
+            </trans-unit>
+            <trans-unit id="user_edit">
+                <source>user_edit</source>
+                <target>Edytuj</target>
+            </trans-unit>
+            <trans-unit id="category_create">
+                <source>category_create</source>
+                <target>Stwórz kategorię </target>
+            </trans-unit>
+            <trans-unit id="Email">
+                <source>Email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="message_updated_successfully">
+                <source>message_updated_successfully</source>
+                <target>Zaktualizowano </target>
+            </trans-unit>
+            <trans-unit id="message_deleted_successfully">
+                <source>message_deleted_successfully</source>
+                <target>Usunięto</target>
+            </trans-unit>
+            <trans-unit id="message_created_successfully">
+                <source>message_created_successfully</source>
+                <target>Stworzono</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

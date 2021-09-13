@@ -6,40 +6,37 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\ChangePasswordFormType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
-use App\Security\LoginFormAuthenticator;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class UserController.
  *
  * @Route("/user")
- * @IsGranted("ROLE_ADMIN")
+ * @IsGranted("ROLE_USER")
  */
 class UserController extends AbstractController
 {
-
     /**
      * Index action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
-     * @param \App\Repository\UserRepository            $userRepository User repository
-     * @param \Knp\Component\Pager\PaginatorInterface   $paginator      Paginator
+     * @param Request                                 $request        HTTP request
+     * @param UserRepository                          $userRepository User repository
+     * @param \Knp\Component\Pager\PaginatorInterface $paginator      Paginator
      *
-     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     * @return Response HTTP response
      *
      * @Route(
      *     "/",
      *     name="user_index",
      * )
+     *  @IsGranted("ROLE_USER")
      */
     public function index(Request $request, UserRepository $userRepository, PaginatorInterface $paginator): Response
     {
@@ -55,14 +52,13 @@ class UserController extends AbstractController
         );
     }
 
-
     /**
      * Edit action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
-     * @param \App\Repository\UserRepository        $userRepository User repository
+     * @param Request        $request        HTTP request
+     * @param UserRepository $userRepository User repository
      *
-     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     * @return Response HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -71,24 +67,23 @@ class UserController extends AbstractController
      *     "/edit",
      *     methods={"GET", "PUT"},
      *     name="user_edit",
-     * )            $password = ;
+     * )
      */
-    public function edit(Request $request, UserPasswordEncoderInterface $encoder, UserRepository $userRepository): Response
+    public function edit(Request $request, UserRepository $userRepository): Response
     {
         $user = $this->getUser();
-        $form = $this->createForm(ChangePasswordFormType::class, $user, ['method' => 'PUT']);
+        $form = $this->createForm(UserType::class, ['method' => 'PUT']);
         $form->handleRequest($request);
-        if ($request->getMethod() === "POST" && $form->isValid()) {
-                $manager = $this->getDoctrine()->getManager();
-                $plainPassword = $form->get('NewPassword')->getData();
-                $encoded = $encoder->encodePassword($user, $plainPassword);
-                $user->setPassword($encoded);
-                $manager->persist($user);
-                $manager->flush();
-                $this->addFlash('success', 'message_added_successfully');
 
-                return $this->redirectToRoute('user_index');
-            }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $username = $form['username']->getData();
+            $user->setUsername($username);
+
+            $userRepository->save($user);
+            $this->addFlash('success', 'message_updated_successfully');
+
+            return $this->redirectToRoute('user_index');
+        }
 
         return $this->render(
             'user/edit.html.twig',
@@ -97,7 +92,4 @@ class UserController extends AbstractController
             ]
         );
     }
-
-
-
 }

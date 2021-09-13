@@ -42,6 +42,7 @@ class UserFixtures extends AbstractBaseFixtures
             $user = new User();
             $user->setEmail(sprintf('user%d@example.com', $i));
             $user->setRoles([User::ROLE_USER]);
+            $user->setUsername(sprintf('user%d', $i));
             $user->setPassword(
                 $this->passwordEncoder->encodePassword(
                     $user,
@@ -56,6 +57,22 @@ class UserFixtures extends AbstractBaseFixtures
             $user = new User();
             $user->setEmail(sprintf('admin%d@example.com', $i));
             $user->setRoles([User::ROLE_USER, User::ROLE_ADMIN]);
+            $user->setUsername(sprintf('admin%d', $i));
+            $user->setPassword(
+                $this->passwordEncoder->encodePassword(
+                    $user,
+                    'admin1234'
+                )
+            );
+
+            return $user;
+        });
+
+        $this->createMany(1, 'normal', function ($i) {
+            $user = new User();
+            $user->setEmail(sprintf('agnieszka.moryc@student.uj.edu.pl', $i));
+            $user->setRoles([User::ROLE_USER, User::ROLE_ADMIN]);
+            $user->setUsername(sprintf('san%d', $i));
             $user->setPassword(
                 $this->passwordEncoder->encodePassword(
                     $user,

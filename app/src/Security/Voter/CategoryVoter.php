@@ -12,8 +12,6 @@ class CategoryVoter extends Voter
 {
     /**
      * Security helper.
-     *
-     * @var Security
      */
     private Security $security;
 

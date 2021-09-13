@@ -38,7 +38,6 @@ class CommentType extends AbstractType
                 'attr' => ['max_length' => 255],
             ]
         );
-
     }
 
     /**

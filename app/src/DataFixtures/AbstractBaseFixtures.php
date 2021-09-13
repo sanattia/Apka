@@ -18,8 +18,6 @@ abstract class AbstractBaseFixtures extends Fixture
 {
     /**
      * Faker.
-     *
-     * @var \Faker\Generator
      */
     protected \Faker\Generator $faker;
 
@@ -32,8 +30,6 @@ abstract class AbstractBaseFixtures extends Fixture
 
     /**
      * Object reference index.
-     *
-     * @var array
      */
     private array $referencesIndex = [];
 
@@ -101,7 +97,7 @@ abstract class AbstractBaseFixtures extends Fixture
             $this->referencesIndex[$groupName] = [];
 
             foreach ($this->referenceRepository->getReferences() as $key => $reference) {
-                if (str_starts_with($key, $groupName . '_')) {
+                if (str_starts_with($key, $groupName.'_')) {
                     $this->referencesIndex[$groupName][] = $key;
                 }
             }

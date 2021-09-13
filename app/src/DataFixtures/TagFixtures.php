@@ -6,7 +6,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Tag;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 /**

@@ -24,23 +24,31 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  *
  * @UniqueEntity(fields={"email"})
+ *
  * @method string getUserIdentifier()
  */
 class User implements UserInterface
 {
     /**
+     * A non-persisted field that's used to create the encoded password.
+     *
+     * @var string
+     */
+    private $plainPassword;
+
+    /**
      * Role user.
      *
      * @var string
      */
-    const ROLE_USER = 'ROLE_USER';
+    public const ROLE_USER = 'ROLE_USER';
 
     /**
      * Role admin.
      *
      * @var string
      */
-    const ROLE_ADMIN = 'ROLE_ADMIN';
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
 
     /**
      * Primary key.
@@ -73,6 +81,15 @@ class User implements UserInterface
      * @Assert\Email
      */
     private $email;
+
+    /**
+     * Username.
+     *
+     * @var string
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     */
+    private $username;
 
     /**
      * Roles.
@@ -124,16 +141,14 @@ class User implements UserInterface
         $this->email = $email;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     *
-     * @return string User name
-     */
-    public function getUsername(): string
+    public function getUsername()
     {
-        return (string) $this->email;
+        return $this->username;
+    }
+
+    public function setUsername($username)
+    {
+        $this->username = $username;
     }
 
     /**
@@ -192,20 +207,31 @@ class User implements UserInterface
         // not needed when using the "bcrypt" algorithm in security.yaml
     }
 
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+        // forces the object to look "dirty" to Doctrine. Avoids
+        // Doctrine *not* saving this entity, if only plainPassword changes
+        $this->password = null;
+    }
+
     /**
      * @see UserInterface
      */
     public function eraseCredentials()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 
     public function __call(string $name, array $arguments)
     {
         // TODO: Implement @method string getUserIdentifier()
     }
-
 
     public function __toString(): string
     {

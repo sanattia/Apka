@@ -24,7 +24,7 @@ class CommentRepository extends ServiceEntityRepository
      *
      * @constant int
      */
-    const PAGINATOR_ITEMS_PER_PAGE = 10;
+    public const PAGINATOR_ITEMS_PER_PAGE = 10;
 
     /**
      * BookRepository constructor.
@@ -35,7 +35,6 @@ class CommentRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Comment::class);
     }
-
 
     /**
      * Query all records.
@@ -61,6 +60,7 @@ class CommentRepository extends ServiceEntityRepository
         $this->_em->persist($comment);
         $this->_em->flush();
     }
+
     /**
      * Delete record.
      *

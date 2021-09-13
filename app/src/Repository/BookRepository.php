@@ -7,7 +7,6 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
-
 /**
  * @method Book|null find($id, $lockMode = null, $lockVersion = null)
  * @method Book|null findOneBy(array $criteria, array $orderBy = null)
@@ -25,7 +24,7 @@ class BookRepository extends ServiceEntityRepository
      *
      * @constant int
      */
-    const PAGINATOR_ITEMS_PER_PAGE = 10;
+    public const PAGINATOR_ITEMS_PER_PAGE = 10;
 
     /**
      * BookRepository constructor.
@@ -55,7 +54,6 @@ class BookRepository extends ServiceEntityRepository
             ->orderBy('book.updatedAt', 'DESC');
     }
 
-
     /**
      * Save record.
      *
@@ -84,7 +82,6 @@ class BookRepository extends ServiceEntityRepository
         $this->_em->flush();
     }
 
-
     /**
      * Get or create new query builder.
      *
@@ -96,5 +93,4 @@ class BookRepository extends ServiceEntityRepository
     {
         return $queryBuilder ?? $this->createQueryBuilder('book');
     }
-
 }

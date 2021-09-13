@@ -15,8 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/record")
  */
-class RecordController extends AbstractController{
-
+class RecordController extends AbstractController
+{
     /**
      * Index action.
      *
@@ -39,6 +39,7 @@ class RecordController extends AbstractController{
     }
 
     // ...
+
     /**
      * Show action.
      *

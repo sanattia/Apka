@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Entity;
-use DateTimeInterface;
+
 use App\Repository\BookRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,7 +21,7 @@ class Book
     /**
      * Id.
      *
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -54,7 +55,6 @@ class Book
      *
      * @Assert\Type(type="\DateTimeInterface")
      */
-
     private $createdAt;
 
     /**
@@ -94,7 +94,6 @@ class Book
         $this->comments = new ArrayCollection();
     }
 
-
     public function getId(): ?int
     {
         return $this->id;
@@ -108,7 +107,6 @@ class Book
     public function setTitle(string $title): void
     {
         $this->title = $title;
-
     }
 
     public function getCategory(): ?Category
@@ -227,7 +225,8 @@ class Book
         return $this;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->title;
     }
 }

@@ -12,8 +12,6 @@ class RecordRepository
 {
     /**
      * Data.
-     *
-     * @var array
      */
     private array $data;
 
