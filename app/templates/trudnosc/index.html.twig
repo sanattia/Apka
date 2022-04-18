@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_trudnosc_list'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title_trudnosc_list'|trans }}</h1>
+    {% if pagination is defined and pagination.items|length %}
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'label_id'|trans, 'trudnosc.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_name'|trans, 'trudnosc.name') }}</th>
+                <th>{{ 'label_action'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for trudnosc in pagination.items %}
+                <tr>
+                    <td>{{ trudnosc.id }}</td>
+                    <td>{{ trudnosc.name }}</td>
+                    <td>
+                        <a href="{{ url('trudnosc_show', {id: trudnosc.id}) }}" title="{{ 'action_view'|trans }}">
+                            {{ 'action_view'|trans }}
+                        </a>
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+    {% else %}
+        <p>
+            {{ 'message_empty_list'|trans }}
+        </p>
+    {% endif %}
+    <p class="button">
+        <a href="{{ url('home') }}" title="{{ 'action_back_to_list'|trans }}">
+            {{ 'action_back_to_list'|trans }}
+        </a>
+    </p>
+{% endblock %}

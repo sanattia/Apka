@@ -275,6 +275,10 @@ Ten link wygaśnie w: </target>
                 <source>message_created_successfully</source>
                 <target>Stworzono</target>
             </trans-unit>
+            <trans-unit id="email_subject">
+                <source>email_subject</source>
+                <target>Mail Do Resetu Hasła</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

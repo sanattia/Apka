@@ -6,13 +6,14 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class UserFixtures.
  */
-class UserFixtures extends AbstractBaseFixtures
+class UserFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
     /**
      * Password encoder.
@@ -49,7 +50,14 @@ class UserFixtures extends AbstractBaseFixtures
                     'user1234'
                 )
             );
+            $odznaki = $this->getRandomReferences(
+                'odznaki',
+                $this->faker->numberBetween(0, 5)
+            );
 
+            foreach ($odznaki as $odznaka) {
+                $user->addOdznaki($odznaka);
+            }
             return $user;
         });
 
@@ -64,7 +72,14 @@ class UserFixtures extends AbstractBaseFixtures
                     'admin1234'
                 )
             );
+            $odznaki = $this->getRandomReferences(
+                'odznaki',
+                $this->faker->numberBetween(0, 5)
+            );
 
+            foreach ($odznaki as $odznaka) {
+                $user->addOdznaki($odznaka);
+            }
             return $user;
         });
 
@@ -79,10 +94,29 @@ class UserFixtures extends AbstractBaseFixtures
                     'admin1234'
                 )
             );
+            $odznaki = $this->getRandomReferences(
+                'odznaki',
+                $this->faker->numberBetween(0, 5)
+            );
+
+            foreach ($odznaki as $odznaka) {
+                $user->addOdznaki($odznaka);
+            }
 
             return $user;
         });
 
         $manager->flush();
+
+    }
+    /**
+     * This method must return an array of fixtures classes
+     * on which the implementing class depends on.
+     *
+     * @return array<class-string<FixtureInterface>>
+     */
+    public function getDependencies(): array
+    {
+        return [OdznakaFixtures::class];
     }
 }

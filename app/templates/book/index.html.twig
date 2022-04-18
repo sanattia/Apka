@@ -37,8 +37,8 @@
                 <tr>
                     <td>{{ book.id }}</td>
                     <td>{{ book.title }}</td>
-                    <td>{{ book.createdAt|date('Y/m/d') }}</td>
-                    <td>{{ book.updatedAt|date('Y/m/d') }}</td>
+                    <td>{{ book.createdAt|format_date('long') }}</td>
+                    <td>{{ book.updatedAt|format_date('long') }}</td>
                     <td>{{ book.category.name }}</td>
                     <td>
 

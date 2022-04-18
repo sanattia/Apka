@@ -5,6 +5,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -86,7 +88,9 @@ class User implements UserInterface
      * Username.
      *
      * @var string
+     *
      * @ORM\Column(type="string", length=255, unique=true)
+     *
      * @Assert\NotBlank()
      */
     private $username;
@@ -107,9 +111,31 @@ class User implements UserInterface
 
      * @Assert\NotBlank
      * @Assert\Type(type="string")
+     *
      * @SecurityAssert\UserPassword
      */
     private $password;
+
+    /**
+     * Odznaki.
+     *
+     * @var array
+     *
+     * @ORM\ManyToMany(
+     *     targetEntity=Odznaka::class, inversedBy="users")
+     * @ORM\JoinTable(name="users_odznaki")
+     */
+    private $odznaki;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Avatar::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $avatar;
+
+    public function __construct()
+    {
+        $this->odznaki = new ArrayCollection();
+    }
 
     /**
      * Getter for the Id.
@@ -141,11 +167,22 @@ class User implements UserInterface
         $this->email = $email;
     }
 
-    public function getUsername()
+    /**
+     * Getter for the Username.
+     *
+     * @return string|null Username
+     */
+    public function getUsername(): string
     {
         return $this->username;
     }
 
+
+    /**
+     * Setter for the Username.
+     *
+     * @param string $username Username
+     */
     public function setUsername($username)
     {
         $this->username = $username;
@@ -207,16 +244,24 @@ class User implements UserInterface
         // not needed when using the "bcrypt" algorithm in security.yaml
     }
 
-    public function getPlainPassword()
+    /**
+     * Getter for Plain Password.
+     *
+     * @return string|null Result
+     */
+    public function getPlainPassword(): string
     {
         return $this->plainPassword;
     }
 
+    /**
+     * Setter for Plain Password.
+     *
+     * @param string $plainPassword Plain Password
+     */
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
-        // forces the object to look "dirty" to Doctrine. Avoids
-        // Doctrine *not* saving this entity, if only plainPassword changes
         $this->password = null;
     }
 
@@ -228,13 +273,53 @@ class User implements UserInterface
         $this->plainPassword = null;
     }
 
-    public function __call(string $name, array $arguments)
-    {
-        // TODO: Implement @method string getUserIdentifier()
-    }
-
+    /**
+     * @return email email
+     *
+     */
     public function __toString(): string
     {
         return $this->email;
+    }
+
+    /**
+     * @return Collection|Odznaka[]
+     */
+    public function getOdznaki(): Collection
+    {
+        return $this->odznaki;
+    }
+
+    public function addOdznaki(Odznaka $odznaki): self
+    {
+        if (!$this->odznaki->contains($odznaki)) {
+            $this->odznaki[] = $odznaki;
+        }
+
+        return $this;
+    }
+
+    public function removeOdznaki(Odznaka $odznaki): self
+    {
+        $this->odznaki->removeElement($odznaki);
+
+        return $this;
+    }
+
+    public function getAvatar(): ?Avatar
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(Avatar $avatar): self
+    {
+        // set the owning side of the relation if necessary
+        if ($avatar->getUser() !== $this) {
+            $avatar->setUser($this);
+        }
+
+        $this->avatar = $avatar;
+
+        return $this;
     }
 }

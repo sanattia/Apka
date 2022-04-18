@@ -1,4 +1,7 @@
 <?php
+/**
+ * Book Voter.
+ */
 
 namespace App\Security\Voter;
 
@@ -8,6 +11,9 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Book Voter
+ */
 class BookVoter extends Voter
 {
     /**
@@ -64,9 +70,9 @@ class BookVoter extends Voter
             case 'EDIT':
             case 'DELETE':
             case 'CREATE':
-            if ($this->security->isGranted('ROLE_ADMIN')) {
-                return true;
-            }
+                if ($this->security->isGranted('ROLE_ADMIN')) {
+                    return true;
+                }
                 break;
             default:
                 return false;

@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_trasa_list'|trans }}
+{% endblock %}
+
+{% block body %}
+<h1>{{ 'title_trasa_list'|trans }}</h1>
+{% if pagination is defined and pagination.items|length %}
+
+    <div class="navigation text-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>{{ knp_pagination_sortable(pagination, 'label_id'|trans, 'trasa.id') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'label_name'|trans, 'trasa.name') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'trasa.createdAt') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'label_updated_at'|trans, 'trasa.updatedAt') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'label_czas'|trans, 'trasa.czas') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'label_region'|trans, 'region.name') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'label_trudnosc'|trans, 'trudnosc.name') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'label_points'|trans, 'trasa.points') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'label_punktStartowy'|trans, 'trasa.punktStartowy') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'label_punktKoncowy'|trans, 'trasa.punktKoncowy') }}</th>
+        <th>{{ 'label_tags'|trans }}</th>
+        <th>{{ 'label_action'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for trasa in pagination.items %}
+    <tr>
+        <td>{{ trasa.id }}</td>
+        <td>{{ trasa.name }}</td>
+        <td>{{ trasa.createdAt|format_date('long') }}</td>
+        <td>{{ trasa.updatedAt|format_date('long') }}</td>
+        <td>{{ trasa.czas|date('H:i') }}</td>
+        <td>{{ trasa.region.name }}</td>
+        <td>{{ trasa.trudnosc.name }}</td>
+        <td>{{ trasa.points }}</td>
+        <td>{{ trasa.punktStartowy }}</td>
+        <td>{{ trasa.punktKoncowy }}</td>
+        <td>
+
+            {% if trasa.tags is defined and trasa.tags|length %}
+                {% for tag in trasa.tags %}
+                    {{ tag.title }}
+                {% endfor %}
+            {% else %}
+                &nbsp;
+            {% endif %}
+        </td>
+        <td>
+            <a href="{{ url('trasa_show', {id: trasa.id}) }}" title="{{ 'action_view'|trans }}">
+                {{ 'action_view'|trans }}
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="navigation text-center">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{% else %}
+    <p>
+        {{ 'message_empty_list'|trans }}
+    </p>
+    {% endif %}
+<p class="button">
+    <a href="{{ url('home') }}" title="{{ 'action_back_to_list'|trans }}">
+        {{ 'action_back_to_list'|trans }}
+    </a>
+</p>
+{% endblock %}

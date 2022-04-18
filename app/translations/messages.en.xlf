@@ -276,6 +276,10 @@ link to reset your password. </target>
                 <source>message_created_successfully</source>
                 <target>Created Successfully</target>
             </trans-unit>
+            <trans-unit id="email_subject">
+                <source>email_subject</source>
+                <target>Password Reset Mail</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

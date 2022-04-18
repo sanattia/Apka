@@ -15,9 +15,9 @@
             <dt>{{ 'label_title'|trans }}</dt>
             <dd>{{  book.title }}</dd>
             <dt>{{ 'label_created_at'|trans }}</dt>
-            <dd>{{ book.createdAt|date('Y/m/d') }}</dd>
+            <dd>{{ book.createdAt|format_date('long') }}</dd>
             <dt>{{ 'label_updated_at'|trans }}</dt>
-            <dd>{{ book.updatedAt|date('Y/m/d') }}</dd>
+            <dd>{{ book.updatedAt|format_date('long') }}</dd>
             <dt>{{ 'label_tags'|trans }}</dt>
             <dd>
 

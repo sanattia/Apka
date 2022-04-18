@@ -17,6 +17,8 @@ class HomeController extends AbstractController
     /**
      * Index action.
      *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
      * @Route(
      *     "/",
      *     methods={"GET"},

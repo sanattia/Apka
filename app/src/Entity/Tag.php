@@ -52,16 +52,16 @@ class Tag
     private $title;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Book::class, mappedBy="tags",)
+     * @ORM\ManyToMany(targetEntity=Trasa::class, mappedBy="tags",)
      */
-    private $books;
+    private $trasy;
 
     /**
      * Tag constructor.
      */
     public function __construct()
     {
-        $this->books = new ArrayCollection();
+        $this->trasy = new ArrayCollection();
     }
 
     /**
@@ -95,38 +95,38 @@ class Tag
     }
 
     /**
-     * Getter for books.
+     * Getter for trasy.
      *
-     * @return \Doctrine\Common\Collections\Collection|\App\Entity\Book[] Books collection
+     * @return Collection Trasy collection
      */
-    public function getBooks(): Collection
+    public function getTrasy(): Collection
     {
-        return $this->books;
+        return $this->trasy;
     }
 
     /**
-     * Add book to collection.
+     * Add trasa to collection.
      *
-     * @param \App\Entity\Book $book Book entity
+     * @param \App\Entity\Trasa $trasa Trasa entity
      */
-    public function addBook(Book $book): void
+    public function addTrasa(Trasa $trasa): void
     {
-        if (!$this->books->contains($bookk)) {
-            $this->books[] = $book;
-            $book->addTag($this);
+        if (!$this->trasy->contains($trasa)) {
+            $this->trasy[] = $trasa;
+            $trasa->addTag($this);
         }
     }
 
     /**
-     * Remove book from collection.
+     * Remove trasa from collection.
      *
-     * @param \App\Entity\Book $book Book entity
+     * @param \App\Entity\Trasa $trasa Trasa entity
      */
-    public function removeBook(Book $book): void
+    public function removeTrasa(Trasa $trasa): void
     {
-        if ($this->books->contains($book)) {
-            $this->books->removeElement($book);
-            $book->removeTag($this);
+        if ($this->trasy->contains($trasa)) {
+            $this->trasy->removeElement($trasa);
+            $trasa->removeTag($this);
         }
     }
 }

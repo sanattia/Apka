@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_region_details'|trans({'%id%': region.id|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title_region_details'|trans({'%id%': region.id|default('')}) }}</h1>
+    {% if region is defined and region|length %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'label_id'|trans }}</dt>
+            <dd>{{ region.id }}</dd>
+            <dt>{{ 'label_name'|trans }}</dt>
+            <dd>{{  region.name }}</dd>
+        </dl>
+
+    {% else %}
+        <p>
+            {{ 'message_item_not_found'|trans }}
+        </p>
+    {% endif %}
+    <p>
+        <a href="{{ url('region_index') }}" title="{{ 'action_back_to_list'|trans }}">
+            {{ 'action_back_to_list'|trans }}
+        </a>
+    </p>
+{% endblock %}
